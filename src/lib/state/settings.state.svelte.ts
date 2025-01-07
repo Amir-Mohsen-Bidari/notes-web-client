@@ -1,16 +1,16 @@
 import type { Theme } from "$lib/types";
 import { setContext, getContext } from "svelte";
 
-class AppSettings {
+export class AppSettings {
     theme = $state<Theme>("system");
 }
 
 let settingsKey = Symbol("settings");
 
 export function setSettingsContext(settings: AppSettings) {
-    setContext(settingsKey, settings);
+    return setContext(settingsKey, settings);
 }
 
 export function getSettingsContext() {
-    return getContext(settingsKey);
+    return getContext<ReturnType<typeof setSettingsContext>>(settingsKey);
 }

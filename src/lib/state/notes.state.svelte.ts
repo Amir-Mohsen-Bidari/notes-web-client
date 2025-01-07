@@ -1,7 +1,7 @@
 import type { Note, NotesFilter } from "$lib/types";
 import { getContext, setContext } from "svelte";
 
-class Notes {
+export class Notes {
     notes = $state<Note[]>([]);
     filter = $state<NotesFilter>({
         search: "",
@@ -39,9 +39,9 @@ class Notes {
 let notesKey = Symbol("notes");
 
 export function setNotesContext(notes: Notes) {
-    setContext(notesKey, notes);
+    return setContext(notesKey, notes);
 }
 
 export function getNotesContext() {
-    return getContext(notesKey);
+    return getContext<ReturnType<typeof setNotesContext>>(notesKey);
 }
